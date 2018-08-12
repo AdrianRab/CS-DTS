@@ -1,7 +1,5 @@
 package pl.arabowski.CSDTSCoding_Assignment.model;
 
-import java.sql.Time;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,19 +16,25 @@ public class Event {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private long id;
+	@Column(name = "eventId")
+	private long eventId;
 
-	@Column(name = "eventId", nullable = false)
-	private String eventId;
+	@Column(name = "id", nullable = false)
+	private String id;
+	
+	@Transient
+	private long timestamp;
 
 	@Transient
-	private Time startTime;
+	private long startTime;
 
 	@Transient
-	private Time finishTime;
+	private long finishTime;
+	
+	@Transient
+	private String state;
 
-	private Time duration;
+	private long duration;
 
 	private String type;
 
@@ -38,43 +42,44 @@ public class Event {
 
 	private boolean alert;
 
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getEventId() {
+	public long getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(String eventId) {
+	public void setEventId(long eventId) {
 		this.eventId = eventId;
 	}
 
-	public Time getStartTime() {
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public long getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
+	public void setStartTime(long startTime) {
 		this.startTime = startTime;
 	}
 
-	public Time getFinishTime() {
+	public long getFinishTime() {
 		return finishTime;
 	}
 
-	public void setFinishTime(Time finishTime) {
+	public void setFinishTime(long finishTime) {
 		this.finishTime = finishTime;
 	}
 
-	public Time getDuration() {
+	public long getDuration() {
 		return duration;
 	}
 
-	public void setDuration(Time duration) {
+	public void setDuration(long duration) {
 		this.duration = duration;
 	}
 
@@ -100,5 +105,21 @@ public class Event {
 
 	public void setAlert(boolean alert) {
 		this.alert = alert;
+	}
+	
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
 	}
 }

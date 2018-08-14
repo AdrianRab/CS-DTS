@@ -3,6 +3,7 @@ package pl.arabowski.CSDTSCoding_Assignment.service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -41,8 +42,8 @@ public class EventServiceImplementation implements EventService {
 	}
 
 	@Override
-	public long countDuration(long startTime, long finishTime) {
-		long duration = startTime - finishTime;
+	public BigInteger countDuration(BigInteger startTime, BigInteger finishTime) {
+		BigInteger duration = finishTime.subtract(startTime);
 		return duration;
 	}
 
@@ -96,7 +97,7 @@ public class EventServiceImplementation implements EventService {
 
 	@Override
 	public void saveToDB(Event event) {
-		if(event.getDuration()>4) {
+		if(event.getDuration().longValue()>4) {
 			event.setAlert(true);
 		}
 		eventRepo.save(event);

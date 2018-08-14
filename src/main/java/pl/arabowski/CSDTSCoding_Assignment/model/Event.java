@@ -1,5 +1,7 @@
 package pl.arabowski.CSDTSCoding_Assignment.model;
 
+import java.math.BigInteger;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,18 +25,18 @@ public class Event {
 	private String id;
 	
 	@Transient
-	private long timestamp;
+	private BigInteger timestamp;
 
 	@Transient
-	private long startTime;
+	private BigInteger startTime;
 
 	@Transient
-	private long finishTime;
+	private BigInteger finishTime;
 	
 	@Transient
 	private String state;
 
-	private long duration;
+	private BigInteger duration;
 
 	private String type;
 
@@ -59,27 +61,27 @@ public class Event {
 		this.id = id;
 	}
 
-	public long getStartTime() {
+	public BigInteger getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(long startTime) {
+	public void setStartTime(BigInteger startTime) {
 		this.startTime = startTime;
 	}
 
-	public long getFinishTime() {
+	public BigInteger getFinishTime() {
 		return finishTime;
 	}
 
-	public void setFinishTime(long finishTime) {
+	public void setFinishTime(BigInteger finishTime) {
 		this.finishTime = finishTime;
 	}
 
-	public long getDuration() {
+	public BigInteger getDuration() {
 		return duration;
 	}
 
-	public void setDuration(long duration) {
+	public void setDuration(BigInteger duration) {
 		this.duration = duration;
 	}
 
@@ -115,11 +117,11 @@ public class Event {
 		this.state = state;
 	}
 	
-	public long getTimestamp() {
+	public BigInteger getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(BigInteger timestamp) {
 		this.timestamp = timestamp;
 	}
 }

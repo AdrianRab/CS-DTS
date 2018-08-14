@@ -35,8 +35,8 @@
 			<tr>
 				<td>${event.eventId}</td>
 				<td>${event.id}</td>
-				<td>${event.duration}]</td>
-				<td>${event.type}/</td>
+				<td>${event.duration}</td>
+				<td>${event.type}</td>
 				<td>${event.host}</td>
 				<td>${event.alert}</td>
 			</tr>

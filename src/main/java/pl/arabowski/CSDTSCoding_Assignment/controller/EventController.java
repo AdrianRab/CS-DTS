@@ -27,7 +27,7 @@ public class EventController {
 	@GetMapping(value = { "/","/home"})
 	public ModelAndView homePage() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("src/main/webapp/WEB-INF/jsp/index");
+		mav.setViewName("index");
 		return mav;
 	}
 	

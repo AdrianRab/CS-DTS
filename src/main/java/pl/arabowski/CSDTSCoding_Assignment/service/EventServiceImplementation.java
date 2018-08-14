@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -23,17 +26,16 @@ public class EventServiceImplementation implements EventService {
 
 	@Autowired
 	private EventRepository eventRepo;
-	
-	
+
 	@Override
 	public void processLogs(String path) {
 		Set<Event> events = readFromFile(path);
-		for(Event e : events) {
+		for (Event e : events) {
 			saveToDB(e);
 		}
-		
+
 	}
-	
+
 	@Override
 	public Event convertToObject(String jsonFile) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -42,43 +44,61 @@ public class EventServiceImplementation implements EventService {
 	}
 
 	@Override
-	public BigInteger countDuration(BigInteger startTime, BigInteger finishTime) {
-		BigInteger duration = finishTime.subtract(startTime);
-		return duration;
+	public long countDuration(String startTime, String finishTime) {
+		BigInteger start = new BigInteger(startTime);
+		BigInteger finish = new BigInteger(finishTime);
+		BigInteger duration = finish.subtract(start);
+		return duration.longValue();
 	}
-
+	
 	@Override
-	public Set<Event> readFromFile(String filePath) {
+	public Set<Event> readFromFile(String filePath){
 		File file = new File(filePath);
-		Set<Event> events = new HashSet<>();
+		Map<String, Event> events = new HashMap<>();
+		Set<Event>result = new HashSet<>();
 		try {
 			Scanner scan = new Scanner(file);
 			while (scan.hasNextLine()) {
 				String log = scan.nextLine();
-				Event logEvent = convertToObject(log.trim());
-
-				if (events.contains(logEvent)) {
-					if (logEvent.getState().equals("FINISHED")) {
-						for (Event e : events) {
-							if (e.getId().equals(logEvent.getId())) {
-								e.setFinishTime(logEvent.getTimestamp());
-							}
-						}
-					} else if (logEvent.getState().equals("STARTED")) {
-						for (Event e : events) {
-							if (e.getId().equals(logEvent.getId())) {
-								e.setStartTime(logEvent.getTimestamp());
-							}
-						}
+				if(!(log.equals(null) || log.equals(""))) {
+					Event logEvent = convertToObject(log.trim());
+					if(logEvent.getState().equals("FINISHED")) {
+						logEvent.setFinishTime(logEvent.getTimestamp());
+					}else if(logEvent.getState().equals("STARTED")) {
+						logEvent.setStartTime(logEvent.getTimestamp());
 					}
-				} else {
-					events.add(logEvent);
+	 
+					if (events.containsKey(logEvent.getId())) {
+						if (logEvent.getState().equals("FINISHED")) {
+							for (Entry<String, Event> e : events.entrySet()) {
+								if (e.getKey().equals(logEvent.getId())) {
+									Event EventFromMap = e.getValue();
+									EventFromMap.setFinishTime((logEvent.getTimestamp()));
+									e.setValue(EventFromMap);
+								}
+							}
+						} else if (logEvent.getState().equals("STARTED")) {
+							for (Entry<String, Event> e : events.entrySet()) {
+								if (e.getKey().equals(logEvent.getId())) {
+									Event EventFromMap = e.getValue();
+									EventFromMap.setStartTime((logEvent.getTimestamp()));
+									e.setValue(EventFromMap);
+								}
+							}
+						}
+					} else {
+						events.put(logEvent.getId(),logEvent);
+					}
 				}
+			
+			}
+			for (Entry<String, Event> e : events.entrySet()) {
+				result.add(e.getValue());
 			}
 			
-			for(Event e : events) {
+			for (Event e : result) {
 				e.setDuration(countDuration(e.getStartTime(), e.getFinishTime()));
-			}	
+			}
 			scan.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found, check the path.");
@@ -91,17 +111,15 @@ public class EventServiceImplementation implements EventService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return events;
+		return result;
 	}
 
 	@Override
 	public void saveToDB(Event event) {
-		if(event.getDuration().longValue()>4) {
+		if (event.getDuration() > 4) {
 			event.setAlert(true);
 		}
 		eventRepo.save(event);
 	}
-
 
 }

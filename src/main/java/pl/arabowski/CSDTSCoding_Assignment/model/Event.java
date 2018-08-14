@@ -25,18 +25,18 @@ public class Event {
 	private String id;
 	
 	@Transient
-	private BigInteger timestamp;
+	private String timestamp;
 
 	@Transient
-	private BigInteger startTime;
+	private String startTime;
 
 	@Transient
-	private BigInteger finishTime;
+	private String finishTime;
 	
 	@Transient
 	private String state;
 
-	private BigInteger duration;
+	private long duration;
 
 	private String type;
 
@@ -61,27 +61,27 @@ public class Event {
 		this.id = id;
 	}
 
-	public BigInteger getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(BigInteger startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public BigInteger getFinishTime() {
+	public String getFinishTime() {
 		return finishTime;
 	}
 
-	public void setFinishTime(BigInteger finishTime) {
+	public void setFinishTime(String finishTime) {
 		this.finishTime = finishTime;
 	}
 
-	public BigInteger getDuration() {
+	public long getDuration() {
 		return duration;
 	}
 
-	public void setDuration(BigInteger duration) {
+	public void setDuration(long duration) {
 		this.duration = duration;
 	}
 
@@ -117,11 +117,11 @@ public class Event {
 		this.state = state;
 	}
 	
-	public BigInteger getTimestamp() {
+	public String getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(BigInteger timestamp) {
+	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
 }

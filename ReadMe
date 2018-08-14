@@ -1,0 +1,15 @@
+Before you run belo commands make sure you have installed Tomcat and HSQLDB.
+
+To run the program follow below steps:
+1. Fork the repository;
+2. Use Clone or download button on your fork;
+3. Create a destination folder on your hard drive and open it in terminal.
+4. Open terminal in the destination folder and clone repository using your fork (git clone repository_address).
+5. Make sure you have HSQLDB running.
+6. In the terminal browse to the project location and create exutable jar by typing: ./gradlew bootJar
+7. Run application by typing:  java -jar /build/libs/CS-DTS-Coding_Assignment-0.0.1-SNAPSHOT.jar
+You can also run it by typing: ./gradlew bootRun
+8. Go to the browser and type http://localhost:8080/process-logs/home
+9. Hit 'Run program' button. Results will be presented on the screen.
+
+Source .txt file is located in src/main/resources/file folder in the project. 

@@ -1,4 +1,4 @@
-Before you run belo commands make sure you have installed Tomcat and HSQLDB.
+Before you run below commands make sure you have installed Apache Tomcat web server and HSQLDB.
 
 To run the program follow below steps:
 1. Fork the repository;
